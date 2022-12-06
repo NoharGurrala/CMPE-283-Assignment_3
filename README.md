@@ -1,10 +1,12 @@
 # CMPE 283 Assignment 2
 
-1. This assignment was done by 
+## 1. This assignment was done by 
 
 -	Nohar Reddy Gurrala (016707821)
 -	Rama Sai Gurunadh Dara (016709251)
+
 <br/>
+
 Nohar Reddy Gurrala
 -	Built the kernel
 -	Installed the necessary kernel modules in the virtual machine
@@ -22,7 +24,7 @@ Rama Sai Gurunadh Dara
 
 <br />
 
-## Assignment 2 modifies the behavior of the cpu_id instruction for the following cases:
+Assignment 2 modifies the behavior of the cpu_id instruction for the following cases:
 
 
 For CPUID leaf node %eax=0x4FFFFFFC:
@@ -36,7 +38,7 @@ For CPUID leaf node %eax=0x4FFFFFFD:
  
  
  
-2.	The steps used to complete the assignment.
+## 2.	The steps used to complete the assignment.
 
 -	This assignment has been performed in GCP (Google Cloud Platform).
 
