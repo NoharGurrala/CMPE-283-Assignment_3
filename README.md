@@ -81,12 +81,17 @@ gcloud compute instances create instance-1
 
 Configuration:
     -	`Machine Type: n2-standard-8`
+    <br />
     -	`CPU platform: Intel Cascade Lake`
+    <br />
     -	`Enabling Nested Virtualization`
+    <br />
     -  	`OS – Ubuntu`
+    <br />
     -	`RAM – 32GB`
+    <br />
     -	`ROM – 250GB`
-
+<br />
 
 Let’s start with fork the code into the Git account from https://github.com/torvalds/linux
 
