@@ -30,13 +30,12 @@ Assignment 2 modifies the behavior of the cpu_id instruction for the following c
 For CPUID leaf node %eax=0x4FFFFFFC:
     -	Return the total number of exits (all types) in %eax
 
-
 For CPUID leaf node %eax=0x4FFFFFFD:
     -	Return the high 32 bits of the total time spent processing all exits in %ebx
     -	Return the low 32 bits of the total time spent processing all exits in %ecx
     -	%ebx and %ecx return values are measured in processor cycles, across all VCPUs
  
- 
+<br /> 
  
 ## 2.	The steps used to complete the assignment.
 
