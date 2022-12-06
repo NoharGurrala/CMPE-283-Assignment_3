@@ -228,10 +228,13 @@ cloud-localds user-data.img user-data
 ```
 sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive "file=user-data.img,format=raw" -m 512 -curses -nographic
 ```
+<br />
 -	**username**: `ubuntu`
+
 	<br />
 -	**password**: `newpass`
-	<br />
+
+<br />
 -	Now to check the functionality, we need the cpuid utility package, for that
 
 ```
