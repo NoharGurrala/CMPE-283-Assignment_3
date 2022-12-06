@@ -1,12 +1,12 @@
-CMPE 283 Assignment 2
-
+# CMPE 283 Assignment 2
 
 1.
+
 This assignment was done by 
 
 -	Nohar Reddy Gurrala (016707821)
 -	Rama Sai Gurunadh Dara (016709251)
-
+<br/>
 Nohar Reddy Gurrala
 -	Built the kernel
 -	Installed the necessary kernel modules in the virtual machine
@@ -22,8 +22,9 @@ Rama Sai Gurunadh Dara
 -	Created and compiled test files
 
 
+<br />
 
-Assignment 2 modifies the behavior of the cpu_id instruction for the following cases:
+## Assignment 2 modifies the behavior of the cpu_id instruction for the following cases:
 
 
 For CPUID leaf node %eax=0x4FFFFFFC:
@@ -47,13 +48,15 @@ Steps to perform for creation of assignment were.,
 
 2.	In the local system, create an SSH key (helps in establishing the connection with VM)
 
+```
 ~ ssh-keygen -t ed25519
-  
+```
 
 After generating SSH copy the public key (which has .pub extension file), which is required while creating the VM.
 
 Create of VM in GCP
 
+```
 gcloud compute instances create instance-1 
 --project=mythical-legend-367621 
 --zone=us-central1-a 
@@ -63,7 +66,6 @@ gcloud compute instances create instance-1
 --maintenance-policy=MIGRATE 
 --provisioning-model=STANDARD 
 --service-account=620889689365-compute@developer.gserviceaccount.com 
-
 --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append 
 --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/mythical-legend-367621/zones/us-central1-a/diskTypes/pd-ssd 
 --no-shielded-secure-boot 
@@ -73,13 +75,17 @@ gcloud compute instances create instance-1
 --min-cpu-platform "Intel Cascade Lake" 
 --enable-nested-virtualization
 
+```
+
+<br />
+
 Configuration:
-    -	Machine Type: n2-standard-8
-    -	CPU platform: Intel Cascade Lake
-    -	Enabling Nested Virtualization
-    -  	OS – Ubuntu
-    -	RAM – 32GB
-    -	ROM – 250GB
+    -	`Machine Type: n2-standard-8`
+    -	`CPU platform: Intel Cascade Lake`
+    -	`Enabling Nested Virtualization`
+    -  	`OS – Ubuntu`
+    -	`RAM – 32GB`
+    -	`ROM – 250GB`
 
 
 Let’s start with fork the code into the Git account from https://github.com/torvalds/linux
@@ -90,30 +96,54 @@ After creating VM, SSH into the VM
 
 1.	Clone the repository from your repo
 
+``` 
 ~ git pull https://github.com/RamDara07/linux
+```
 
+2.	``` ~  sudo apt-get install wget ```
 
-2.	~  sudo apt-get install wget
+3.	``` wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz ```
 
-3.	wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz
+4.	`tar xvf linux-6.0.7.tar.xz`
 
-4.	tar xvf linux-6.0.7.tar.xz
 5.	Install all packages required for building the kernel.
--	sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+	```
+	~  sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+	```
+	
 6.	Configure the kernel by copying an existing configuration file to a .config file.
--	cd linux-6.0.7
--	cp -v /boot/config-$(uname -r) .config
+```
+	~  cd linux-6.0.7
+	~  cp -v /boot/config-$(uname -r) .config
+```
 7.	Build the kernel by using the following:
--	sudo make modules
--	sudo make
-While compiling the kernel, an error may occur saying No rule to make target 'debian/canonical-certs.pem', then execute the below commands:
-a)	scripts/config --disable SYSTEM_TRUSTED_KEYS
-b)	scripts/config --disable SYSTEM_REVOCATION_KEYS
--	sudo make modules_install
--	sudo make install
-8.	Bootloader is automatically updated because of the make install and now we can reboot the system and check the kernel version
--	sudo reboot
--	uname -mrs
+```
+	~  sudo make modules
+	~  sudo make
+```
+While compiling the kernel, an error may occur saying No rule to make target `'debian/canonical-certs.pem'`, then execute the below commands:
+```
+scripts/config --disable SYSTEM_TRUSTED_KEYS
+scripts/config --disable SYSTEM_REVOCATION_KEYS
+```
+
+<br />
+
+```
+~  sudo make modules_install
+```
+<br />
+```
+~ sudo make install
+```
+<br />
+
+8.	Bootloader is automatically updated because of the make `install` and now we can `reboot` the system and `check` the kernel version
+```
+sudo reboot
+```
+<br />
+	`uname -mrs`
 -	Output: Linux 6.0.7 x86_64
 9.	Make code changes in the Linux kernel code. Replace the files below with the files from this repository.
 -	vmx.c: /linux-6.0.7/arch/x86/kvm/vmx/vmx.c
