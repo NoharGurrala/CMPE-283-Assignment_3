@@ -1,8 +1,6 @@
 # CMPE 283 Assignment 2
 
-1.
-
-This assignment was done by 
+1. This assignment was done by 
 
 -	Nohar Reddy Gurrala (016707821)
 -	Rama Sai Gurunadh Dara (016709251)
@@ -38,15 +36,15 @@ For CPUID leaf node %eax=0x4FFFFFFD:
  
  
  
-2.
+2.	The steps used to complete the assignment.
 
-This assignment has been performed in GCP (Google Cloud Platform).
+-	This assignment has been performed in GCP (Google Cloud Platform).
 
-Steps to perform for creation of assignment were.,
+-	Steps to perform for creation of assignment were.,
 
-1.	Create a GCP account and a project (if you haven't already)
+	1.	Create a GCP account and a project (if you haven't already)
 
-2.	In the local system, create an SSH key (helps in establishing the connection with VM)
+	2.	In the local system, create an SSH key (helps in establishing the connection with VM)
 
 ```
 ~ ssh-keygen -t ed25519
@@ -255,7 +253,6 @@ sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive
 
 -	**username**: `ubuntu`
 
-	<br />
 
 -	**password**: `newpass`
 
