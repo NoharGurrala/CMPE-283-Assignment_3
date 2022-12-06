@@ -105,9 +105,15 @@ After creating VM, SSH into the VM
 ~ git pull https://github.com/RamDara07/linux
 ```
 
-2.	``` ~  sudo apt-get install wget ```
+2.	
+```
+ ~  sudo apt-get install wget
+ ```
 
-3.	``` wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz ```
+3.	
+```
+wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz 
+```
 
 4.	`tar xvf linux-6.0.7.tar.xz`
 
@@ -126,6 +132,8 @@ After creating VM, SSH into the VM
 	~  sudo make modules
 	~  sudo make
 ```
+<br />
+
 While compiling the kernel, an error may occur saying No rule to make target `'debian/canonical-certs.pem'`, then execute the below commands:
 ```
 scripts/config --disable SYSTEM_TRUSTED_KEYS
@@ -150,39 +158,87 @@ sudo reboot
 <br />
 	`uname -mrs`
 -	Output: Linux 6.0.7 x86_64
+
+<br />
 9.	Make code changes in the Linux kernel code. Replace the files below with the files from this repository.
--	vmx.c: /linux-6.0.7/arch/x86/kvm/vmx/vmx.c
--	cpuid.c: /linux-6.0.7/arch/x86/kvm/cpuid.c
+-	`vmx.c: /linux-6.0.7/arch/x86/kvm/vmx/vmx.c`
+-	`cpuid.c: /linux-6.0.7/arch/x86/kvm/cpuid.c`
+
+<br />
+
 10.	Built and install modules again
--	sudo make modules && sudo make modules_install
+-	`sudo make modules && sudo make modules_install`
+
+<br />
 11.	To load the newly created modules, run the following commands:
--	sudo rmmod kvm_intel
--	sudo rmmod kvm
--	sudo modprode kvm
--	sudo modprobe kvm_intel
-12.	To test the functionality, a nested virtual machine was created inside the GCP virtual machine. The steps to create a nested virtual machine are as follows:
--	Download the Ubuntu cloud image.img (QEMU compatible image) file from this [ubuntu cloud images site] in GCP VM (https://cloud-images.ubuntu.com/).
-13.	wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
-14.	Install the required qemu packages
-	- sudo apt update && sudo apt install qemu-kvm -y
--Move to the directory where .img file is downloaded. This ubuntu cloud image does not come with a default password for the vm. So, to change the password and login into the vm, perform these following steps(terminal):
-1)  sudo apt-get install cloud-image-utils
+```
+~	sudo rmmod kvm_intel
+~	sudo rmmod kvm
+~	sudo modprode kvm
+~	sudo modprobe kvm_intel
+```
 
-2)  cat >user-data <<EOF
-    #cloud-config
-    password: newpass #new password here
-    chpasswd: { expire: False }
-    ssh_pwauth: True
-    EOF
+<br />
 
-3)  cloud-localds user-data.img user-data
+12.	To test the functionality, a nested virtual machine was created inside the GCP virtual machine. The steps to create a `nested virtual machine` are as follows:
+-	Download the Ubuntu cloud image.img (QEMU compatible image) file from this `[ubuntu cloud images site]` in GCP VM (https://cloud-images.ubuntu.com/).
+
+<br />
+
+13.	
+```
+	wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
+```
+
+<br />
+
+14.	`Install` the required qemu packages
+```
+sudo apt update && sudo apt install qemu-kvm -y
+```
+<br />
+
+Move to the directory where .img file is downloaded. This ubuntu cloud image does not come with a default password for the vm. 
+
+So, to change the password and login into the vm, perform these following steps(terminal):
+
+1) 
+``` 
+sudo apt-get install cloud-image-utils
+```
+<br />
+2) 
+```
+	cat >user-data <<EOF
+   	#cloud-config
+   	password: newpass #new password here
+    	chpasswd: { expire: False }
+    	ssh_pwauth: True
+    	EOF
+```
+<br />
+
+3) 
+```
+cloud-localds user-data.img user-data
+
+```
+<br />
 -	Now, to run this ubuntu image, execute this:
+```
 sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive "file=user-data.img,format=raw" -m 512 -curses -nographic
--	username: ubuntu
--	password: newpass
+```
+-	**username**: `ubuntu`
+	<br />
+-	**password**: `newpass`
+	<br />
 -	Now to check the functionality, we need the cpuid utility package, for that
+
+```
 sudo apt-get update
 sudo apt-get install cpuid
+
+```
 •	NOTE: Make sure two terminals are open:
 o	the GCP VM terminal(T1)
 o	the nested VM terminal(logged in)(T2)
