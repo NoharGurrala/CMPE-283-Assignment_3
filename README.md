@@ -24,7 +24,7 @@ Rama Sai Gurunadh Dara
 
 <br />
 
-Assignment 2 modifies the behavior of the cpu_id instruction for the following cases:
+Assignment 3 modifies the behavior of the cpu_id instruction for the following cases:
 
 <br />
 
