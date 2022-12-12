@@ -1,4 +1,4 @@
-# CMPE 283 Assignment 2
+# CMPE 283 Assignment 3
 
 ## 1. This assignment was done by 
 
@@ -28,18 +28,22 @@ Assignment 2 modifies the behavior of the cpu_id instruction for the following c
 
 <br />
 
-For CPUID leaf node %eax=0x4FFFFFFC:
+ For CPUID leaf node %eax=0x4FFFFFFE:
  
- -	Return the total number of exits (all types) in %eax
+ -	Return the number of exits for the exit number provided (on input) in %ecx
+ 	
+	-	This value should be returned in %eax 
 
-For CPUID leaf node %eax=0x4FFFFFFD:
+
+For CPUID leaf node %eax=0x4FFFFFFF:
+
+ -	Return the time spent processing the exit number provided (on input) in %ecx
+
+	-	Return the high 32 bits of the total time spent for that exit in %ebx
+	
+	-	Return the low 32 bits of the total time spent for that exit in %ecx
  
- -	Return the high 32 bits of the total time spent processing all exits in %ebx
  
- -	Return the low 32 bits of the total time spent processing all exits in %ecx
- 
- -	%ebx and %ecx return values are measured in processor cycles, across all VCPUs
- 
 <br /> 
  
 ## 2.	The steps used to complete the assignment.
@@ -274,4 +278,22 @@ sudo apt-get install cpuid
 •	NOTE: Make sure two terminals are open:
 o	the GCP VM terminal(T1)
 o	the nested VM terminal(logged in)(T2)
+
+<br />
+
+
+## 3.	Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
+
+
+
+
+
+<br />
+
+## 4.	Of the exit types defined in the SDM, which are the most frequent? Least?
+
+
+
+
+
 
