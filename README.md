@@ -292,7 +292,7 @@ o	the nested VM terminal(logged in)(T2)
 
 ## 4.	Of the exit types defined in the SDM, which are the most frequent? Least?
 ```Javascript
-0x4ffffffe, Exit number 30. Total exits=936899
+0x4ffffffe, Exit number 30. Total exits=936899		**Highest Number of Exits**
 0x4ffffffe, Exit number 49. Total exits=167017
 0x4ffffffe, Exit number 28. Total exits=80101
 0x4ffffffe, Exit number 10. Total exits=42581
@@ -306,7 +306,7 @@ o	the nested VM terminal(logged in)(T2)
 0x4ffffffe, Exit number 54. Total exits=9
 0x4ffffffe, Exit number 18. Total exits=7
 0x4ffffffe, Exit number 55. Total exits=3
-0x4ffffffe, Exit number 29. Total exits=2      
+0x4ffffffe, Exit number 29. Total exits=2      		**Lowest Number of Exits**
 0x4ffffffe, Exit number 2.  Total exits=0
 0x4ffffffe, Exit number 8.  Total exits=0
 0x4ffffffe, Exit number 9.  Total exits=0
