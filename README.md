@@ -56,7 +56,7 @@ For CPUID leaf node %eax=0x4FFFFFFF:
 
 	2.	In the local system, create an SSH key (helps in establishing the connection with VM)
 
-```
+```bash
 ~ ssh-keygen -t ed25519
 ```
 
@@ -64,7 +64,7 @@ After generating SSH copy the public key (which has .pub extension file), which 
 
 Create of VM in GCP
 
-```
+```bash
 gcloud compute instances create instance-1 
 --project=mythical-legend-367621 
 --zone=us-central1-a 
@@ -109,34 +109,34 @@ After creating VM, SSH into the VM
 
 1.	Clone the repository from your repo
 
-``` 
+``` bash
 ~ git pull https://github.com/RamDara07/linux
 ```
 
 2.	
-```
+``` bash
  ~  sudo apt-get install wget
  ```
 
 3.	
-```
+``` bash
 wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz 
 ```
 
 4.	`tar xvf linux-6.0.7.tar.xz`
 
 5.	Install all packages required for building the kernel.
-	```
+	``` bash
 	~  sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
 	```
 	
 6.	Configure the kernel by copying an existing configuration file to a .config file.
-```
+``` bash
 	~  cd linux-6.0.7
 	~  cp -v /boot/config-$(uname -r) .config
 ```
 7.	Build the kernel by using the following:
-```
+``` bash
 	~  sudo make modules
 	~  sudo make
 ```
@@ -145,14 +145,14 @@ wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz
 
 While compiling the kernel, an error may occur saying No rule to make target `'debian/canonical-certs.pem'`, then execute the below commands:
 
-```
+``` bash
 scripts/config --disable SYSTEM_TRUSTED_KEYS
 scripts/config --disable SYSTEM_REVOCATION_KEYS
 ```
 
 <br />
 
-```
+``` bash
 ~  sudo make modules_install
 
 ~ sudo make install
@@ -164,7 +164,7 @@ scripts/config --disable SYSTEM_REVOCATION_KEYS
 8.	Bootloader is automatically updated because of the make `install` and now we can `reboot` the system and `check` the kernel version
 
 
-```
+``` bash
 sudo reboot
 ```
 
@@ -192,7 +192,7 @@ sudo reboot
 
 11.	To load the newly created modules, run the following commands:
 
-```
+``` bash
 sudo rmmod kvm_intel
 sudo rmmod kvm
 sudo modprode kvm
@@ -207,14 +207,14 @@ sudo modprobe kvm_intel
 <br />
 
 13.	
-```
+``` bash
 	wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
 ```
 
 <br />
 
 14.	`Install` the required qemu packages
-```
+``` bash
 sudo apt update && sudo apt install qemu-kvm -y
 ```
 
@@ -226,14 +226,14 @@ Move to the directory where .img file is downloaded. This ubuntu cloud image doe
 So, to change the password and login into the vm, perform these following steps(terminal):
 
 1) 
-``` 
+```  bash
 sudo apt-get install cloud-image-utils
 ```
 
 <br />
 
 2) 
-```
+```bash
 	cat >user-data <<EOF
    	#cloud-config
    	password: newpass #new password here
@@ -245,7 +245,7 @@ sudo apt-get install cloud-image-utils
 <br />
 
 3) 
-```
+```bash
 cloud-localds user-data.img user-data
 
 ```
@@ -253,7 +253,7 @@ cloud-localds user-data.img user-data
 <br />
 
 -	Now, to run this ubuntu image, execute this:
-```
+```bash
 sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive "file=user-data.img,format=raw" -m 512 -curses -nographic
 ```
 
@@ -270,7 +270,7 @@ sudo qemu-system-x86_64 -enable-kvm -hda bionic-server-cloudimg-amd64.img -drive
 
 -	Now to check the functionality, we need the cpuid utility package, for that
 
-```
+```bash
 sudo apt-get update
 sudo apt-get install cpuid
 
@@ -284,32 +284,44 @@ o	the nested VM terminal(logged in)(T2)
 
 ## 3.	Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
 
+<br />
+_Is there a steady growth in the number of exits? _
 
+- No. depending only on the call for instruction and the timing 
 
+_Are some VM actions associated with additional exits? _
+
+- Yes. Throughout the VM boot process. 
+
+_How many exits does a complete VM boot require? _
+
+- Varies based on the types of VM and distribution. I calculated it using my setup to be 4396839.
+Exit(10) and Exit(12) Increase have been seen to occur steadily. As they are usually referred to, during our observation.
 
 
 <br />
 
 ## 4.	Of the exit types defined in the SDM, which are the most frequent? Least?
 ```Javascript
-0x4ffffffe, Exit number 30. Total exits=936899		**Highest Number of Exits**
-0x4ffffffe, Exit number 49. Total exits=167017
-0x4ffffffe, Exit number 28. Total exits=80101
-0x4ffffffe, Exit number 10. Total exits=42581
-0x4ffffffe, Exit number 32. Total exits=11016
-0x4ffffffe, Exit number 48. Total exits=10737
-0x4ffffffe, Exit number  1. Total exits=10591
-0x4ffffffe, Exit number  7. Total exits= 7452
-0x4ffffffe, Exit number 12. Total exits= 3887
-0x4ffffffe, Exit number 31. Total exits=  221
-0x4ffffffe, Exit number  0. Total exits=   11
-0x4ffffffe, Exit number 54. Total exits=9
-0x4ffffffe, Exit number 18. Total exits=7
-0x4ffffffe, Exit number 55. Total exits=3
-0x4ffffffe, Exit number 29. Total exits=2      		**Lowest Number of Exits**
-0x4ffffffe, Exit number 2.  Total exits=0
-0x4ffffffe, Exit number 8.  Total exits=0
-0x4ffffffe, Exit number 9.  Total exits=0
+
+0x4ffffffe, Exit number 30. Total exits = 936899		** Most Frequent **
+0x4ffffffe, Exit number 49. Total exits = 167017
+0x4ffffffe, Exit number 28. Total exits =  80101
+0x4ffffffe, Exit number 10. Total exits =  42581
+0x4ffffffe, Exit number 32. Total exits =  11016
+0x4ffffffe, Exit number 48. Total exits =  10737
+0x4ffffffe, Exit number  1. Total exits =  10591
+0x4ffffffe, Exit number  7. Total exits =   7452
+0x4ffffffe, Exit number 12. Total exits =   3887
+0x4ffffffe, Exit number 31. Total exits =    221
+0x4ffffffe, Exit number  0. Total exits =     11
+0x4ffffffe, Exit number 54. Total exits =      9
+0x4ffffffe, Exit number 18. Total exits =      7
+0x4ffffffe, Exit number 55. Total exits =      3
+0x4ffffffe, Exit number 29. Total exits =      2      		** Least Frequent **
+0x4ffffffe, Exit number 2.  Total exits =      0
+0x4ffffffe, Exit number 8.  Total exits =      0
+0x4ffffffe, Exit number 9.  Total exits =      0
 
 ```
 
