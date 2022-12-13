@@ -330,9 +330,9 @@ Least frequent
 0x4ffffffe, Exit number 18. Total exits =      7
 0x4ffffffe, Exit number 55. Total exits =      3
 0x4ffffffe, Exit number 29. Total exits =      2      		** Least Frequent **
-0x4ffffffe, Exit number 2.  Total exits =      0
-0x4ffffffe, Exit number 8.  Total exits =      0
-0x4ffffffe, Exit number 9.  Total exits =      0
+0x4ffffffe, Exit number  2. Total exits =      0
+0x4ffffffe, Exit number  8. Total exits =      0
+0x4ffffffe, Exit number  9. Total exits =      0
 
 ```
 
