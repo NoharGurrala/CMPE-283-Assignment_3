@@ -291,7 +291,7 @@ o	the nested VM terminal(logged in)(T2)
 <br />
 
 ## 4.	Of the exit types defined in the SDM, which are the most frequent? Least?
-
+```
 <span style="color: green;">0x4ffffffe, Exit number 30. Total exits=936899</span> 
 0x4ffffffe, Exit number 49. Total exits=167017
 0x4ffffffe, Exit number 28. Total exits=80101
@@ -311,5 +311,5 @@ o	the nested VM terminal(logged in)(T2)
 0x4ffffffe, Exit number 8.  Total exits=0
 0x4ffffffe, Exit number 9.  Total exits=0
 
-
+```
 
