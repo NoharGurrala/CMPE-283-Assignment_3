@@ -2,26 +2,10 @@
 //  vmx.c
 //  
 //
-//  Created by Spartan on 12/5/22.
+//  Created by Spartan on 12/11/22.
 //
 
 #include "vmx.h"
-
-// SPDX-License-Identifier: GPL-2.0-only
-/*
- * Kernel-based Virtual Machine driver for Linux
- *
- * This module enables machines with Intel VT-x extensions to run virtual
- * machines without emulation or binary translation.
- *
- * Copyright (C) 2006 Qumranet, Inc.
- * Copyright 2010 Red Hat, Inc. and/or its affiliates.
- *
- * Done by:
- *  Ram
- *  Nohar
- */
-
 #include <linux/highmem.h>
 #include <linux/hrtimer.h>
 #include <linux/kernel.h>
@@ -6299,24 +6283,19 @@ void dump_vmcs(struct kvm_vcpu *vcpu)
                vmcs_read16(VIRTUAL_PROCESSOR_ID));
 }
 
-extern u32 total_exits;
-
 /*
  * The guest has exited.  See if we can fix it or if we need userspace
  * assistance.
  */
 static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
+    extern u32 numof_exits_count[75];
     struct vcpu_vmx *vmx = to_vmx(vcpu);
     union vmx_exit_reason exit_reason = vmx->exit_reason;
     u32 vectoring_info = vmx->idt_vectoring_info;
-    
-
-
     u16 exit_handler_index;
-    
-    total_exits++;
 
+    numof_exits_count[exit_reason.basic]++;
     /*
      * Flush logged GPAs PML buffer, this will make dirty_bitmap more
      * updated. Another good is, in kvm_vm_ioctl_get_dirty_log, before
@@ -6491,22 +6470,26 @@ unexpected_vmexit:
 
 static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
-    /*Assignment2*/
-    extern u64 total_time;
+    extern u64 total_exits_cycles[75];
+    struct vcpu_vmx *vmx = to_vmx(vcpu);
+    union vmx_exit_reason exit_reason = vmx->exit_reason;
 
     u64 start_ts = rdtsc();
     int ret = __vmx_handle_exit(vcpu, exit_fastpath);
 
-    
+    /*
+     * Exit to user space when bus lock detected to inform that there is
+     * a bus lock in guest.
+     */
     if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
         if (ret > 0)
             vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
 
         vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
-        total_time += (rdtsc() - start_ts);
+        total_exits_cycles[exit_reason.basic] += (rdtsc() - start_ts);
         return 0;
     }
-    total_time += (rdtsc() - start_ts);
+    total_exits_cycles[exit_reason.basic] += (rdtsc() - start_ts);
     return ret;
 }
 
@@ -8568,4 +8551,3 @@ static int __init vmx_init(void)
     return 0;
 }
 module_init(vmx_init);
-
