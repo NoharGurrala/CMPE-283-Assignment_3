@@ -285,23 +285,40 @@ o	the nested VM terminal(logged in)(T2)
 ## 3.	Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
 
 <br />
-_Is there a steady growth in the number of exits? _
+
+Is there a steady growth in the number of exits?
 
 - No. depending only on the call for instruction and the timing 
 
-_Are some VM actions associated with additional exits? _
+Are some VM actions associated with additional exits?
 
 - Yes. Throughout the VM boot process. 
 
-_How many exits does a complete VM boot require? _
+How many exits does a complete VM boot require?
 
 - Varies based on the types of VM and distribution. I calculated it using my setup to be 4396839.
+
 Exit(10) and Exit(12) Increase have been seen to occur steadily. As they are usually referred to, during our observation.
 
 
 <br />
 
 ## 4.	Of the exit types defined in the SDM, which are the most frequent? Least?
+
+- Of the exit types defined in the SDM, which are:
+
+Most frequent
+
+0x4ffffffe, Exit number 30. Total exits = 936899
+
+EPT infraction The configuration of the EPT paging structures prevented an attempt to access memory using a guest-physical address.
+
+Least frequent
+
+- There are several basic exit reason(s) whose Total exits is 0. Second least exit reason is 29
+
+ 0x4ffffffe, Exit number 29. Total exits=2
+
 ```Javascript
 
 0x4ffffffe, Exit number 30. Total exits = 936899		** Most Frequent **
