@@ -118,24 +118,18 @@ After creating VM, SSH into the VM
  ~  sudo apt-get install wget
  ```
 
-3.	
-``` bash
-wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.7.tar.xz 
-```
 
-4.	`tar xvf linux-6.0.7.tar.xz`
-
-5.	Install all packages required for building the kernel.
+3.	Install all packages required for building the kernel.
 	``` bash
 	~  sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
 	```
 	
-6.	Configure the kernel by copying an existing configuration file to a .config file.
+4.	Configure the kernel by copying an existing configuration file to a .config file.
 ``` bash
-	~  cd linux-6.0.7
+	~  cd linux
 	~  cp -v /boot/config-$(uname -r) .config
 ```
-7.	Build the kernel by using the following:
+5.	Build the kernel by using the following:
 ``` bash
 	~  sudo make modules
 	~  sudo make
@@ -161,7 +155,7 @@ scripts/config --disable SYSTEM_REVOCATION_KEYS
 
 <br />
 
-8.	Bootloader is automatically updated because of the make `install` and now we can `reboot` the system and `check` the kernel version
+6.	Bootloader is automatically updated because of the make `install` and now we can `reboot` the system and `check` the kernel version
 
 
 ``` bash
@@ -171,26 +165,26 @@ sudo reboot
 <br />
 
 	`uname -mrs`	
-	Output: Linux 6.0.7 x86_64
+	Output: Linux
 
 
 <br />
 
 
-9.	Make code changes in the Linux kernel code. Replace the files below with the files from this repository.
+7.	Make code changes in the Linux kernel code. Replace the files below with the files from this repository.
 -	`vmx.c: /linux-6.0.7/arch/x86/kvm/vmx/vmx.c`
 -	`cpuid.c: /linux-6.0.7/arch/x86/kvm/cpuid.c`
 
 <br />
 
-10.	Built and install modules again
+8.	Built and install modules again
 
 
 -	`sudo make modules && sudo make modules_install`
 
 <br />
 
-11.	To load the newly created modules, run the following commands:
+9.	To load the newly created modules, run the following commands:
 
 ``` bash
 sudo rmmod kvm_intel
@@ -201,19 +195,19 @@ sudo modprobe kvm_intel
 
 <br />
 
-12.	To test the functionality, a nested virtual machine was created inside the GCP virtual machine. The steps to create a `nested virtual machine` are as follows:
+10.	To test the functionality, a nested virtual machine was created inside the GCP virtual machine. The steps to create a `nested virtual machine` are as follows:
 -	Download the Ubuntu cloud image.img (QEMU compatible image) file from this `[ubuntu cloud images site]` in GCP VM (https://cloud-images.ubuntu.com/).
 
 <br />
 
-13.	
+11.	
 ``` bash
 	wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
 ```
 
 <br />
 
-14.	`Install` the required qemu packages
+12.	`Install` the required qemu packages
 ``` bash
 sudo apt update && sudo apt install qemu-kvm -y
 ```
